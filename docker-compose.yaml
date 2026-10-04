@@ -1,0 +1,30 @@
+services:
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_DOMAIN: ${MINIO_HOST}
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - shared-minio
+
+networks:
+  # Общая сеть с chat и makeup. Создаётся deploy'ем идемпотентно
+  # (`docker network create shared-minio || true`).
+  shared-minio:
+    external: true
+    name: shared-minio
+
+volumes:
+  # Нейтральное имя (не привязано к проекту приложения).
+  minio_data:
+    name: shared-minio-data
