@@ -44,5 +44,6 @@ jobs:
             git fetch --prune origin main
             git reset --hard origin/main
             docker network create shared-minio 2>/dev/null || true
+            docker volume create shared-minio-data 2>/dev/null || true
             docker compose up -d
             docker image prune -f
