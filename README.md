@@ -25,6 +25,12 @@
 Приложения используют те же креды: `MINIO_ACCESS_KEY` = `MINIO_ROOT_USER`,
 `MINIO_SECRET_KEY` = `MINIO_ROOT_PASSWORD`.
 
+## Метрики
+
+`/minio/v2/metrics/cluster` отдаётся без токена (`MINIO_PROMETHEUS_AUTH_TYPE=public`),
+т.к. порт опубликован только на `127.0.0.1`. Prometheus в репозитории `monitoring`
+скрейпит его через SSH-туннель (`127.0.0.1:9103`).
+
 ## Запуск
 
 ```bash

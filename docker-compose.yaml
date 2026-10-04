@@ -7,6 +7,9 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_DOMAIN: ${MINIO_HOST}
+      # Метрики Prometheus без bearer-токена: endpoint доступен только через
+      # loopback/SSH-туннель (порт публикуется на 127.0.0.1), наружу не торчит.
+      MINIO_PROMETHEUS_AUTH_TYPE: public
     env_file:
       - .env
     ports:
